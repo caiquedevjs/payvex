@@ -9,6 +9,8 @@ export const Input_styles = StyleSheet.create({
         justifyContent : "center",
         alignItems: 'center',
         fontSize : 16,
+        color : '#3A416F',
+        
     },
 
     

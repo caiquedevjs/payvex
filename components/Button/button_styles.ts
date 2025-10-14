@@ -12,7 +12,7 @@ export const styles_button = StyleSheet.create({
 
     Text :{
         fontSize : 16,
-        color: "#3A416F#141727",
+        color: "#3A416F",
         fontWeight : "bold",
     }
 })

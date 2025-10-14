@@ -6,7 +6,8 @@ export  const app_styles = StyleSheet.create({
        justifyContent : "center",
        alignItems: "center",
        flex: 1,
-       padding: 32,
-       gap : 10,
+       padding: 20,
+       gap : 1,
+       backgroundColor : '#ffffff'
     }
 })
