@@ -1,13 +1,16 @@
 import { Menu, MenuItem, Text, TextProps } from '@ui-kitten/components';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
 export const UsersScreen= (): React.ReactElement => {
 
+  const router = useRouter();
   const [selectedTitle, setSelectedTitle] = React.useState('');
 
   const onUsersPress = (): void => {
     setSelectedTitle('Conta');
+     router.push('/accountScreen')
   };
 
   const onOrdersPress = (): void => {

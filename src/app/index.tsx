@@ -1,8 +1,10 @@
 
+import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Input } from '../components/Input/Input';
 import { Login_Logo } from '../components/Login_logo/Login_logo';
 import { app_styles } from './app_styles';
+
 
 export default function Index() {
  
@@ -10,6 +12,11 @@ export default function Index() {
 
   return (
     <View style={app_styles.App}>
+      <StatusBar 
+                    style="dark" // ou "light", dependendo da cor do seu fundo
+                    backgroundColor="transparent" // Deixa o fundo transparente
+                    translucent={true} // ✅ ESTA É A PROP MÁGICA!
+                  />
       {/* O <ToastManager /> FOI REMOVIDO DAQUI */}
       <Text style={text_styles.Text}>
         Organize todos os seus <Text style={span_styles.Text}>pagamentos</Text>{' '}

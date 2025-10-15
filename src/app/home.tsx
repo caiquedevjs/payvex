@@ -1,20 +1,15 @@
-// Em app/home.js
 
-// 1. Importe 'TabBar' e 'Tab' em vez de 'BottomNavigation'
 import { Layout, Tab, TabBar } from '@ui-kitten/components';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-// Suas importações de tela continuam as mesmas
-import { OrdersScreen } from '../components/screens/OrdersScreen';
-import { TransactionsScreen } from '../components/screens/TransactionsScreen';
-import { UsersScreen } from '../components/screens/UsersScreen';
+import { OrdersScreen } from './OrdersScreen';
+import { TransactionsScreen } from './TransactionsScreen';
+import { UsersScreen } from './UsersScreen';
 
 export default function HomeScreen() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  // Esta função para renderizar a tela correta não muda!
   const renderScreen = () => {
     switch (selectedIndex) {
       case 0:
@@ -29,9 +24,14 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    
     
     <Layout style={{ flex: 1 }}>
+       <StatusBar 
+              style="dark" // ou "light", dependendo da cor do seu fundo
+              backgroundColor="transparent" // Deixa o fundo transparente
+              translucent={true} // ✅ ESTA É A PROP MÁGICA!
+            />
       
       {/* 2. Mova a barra de navegação para o TOPO do layout */}
       <TabBar
@@ -53,13 +53,13 @@ export default function HomeScreen() {
       </View>
 
     </Layout>
-    </SafeAreaView>
+    
   );
 }
 
 // 3. Crie o StyleSheet com a margem
 const styles = StyleSheet.create({
   tabBar: {
-    marginTop: 40, // <-- Ajuste este valor como preferir
+    marginTop: 70 // <-- Ajuste este valor como preferir
   },
 });
