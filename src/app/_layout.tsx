@@ -1,18 +1,21 @@
-// Em app/_layout.js
+// Em seu arquivo de layout principal (ex: _layout.tsx ou App.tsx)
 
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { Slot } from 'expo-router';
 import React from 'react';
-// 1. Importe o ToastManager aqui
 
 export default function RootLayout() {
   return (
-    // <> é um Fragmento que permite agrupar elementos sem criar um View extra
     <>
-      {/* O <Slot /> renderiza a tela atual (index.js, home.js, etc.) */}
-      <Slot />
-      
-      {/* 2. Coloque o ToastManager aqui para que ele funcione em todo o app */}
-     
+      {/* ✅ CORREÇÃO: O IconRegistry vem ANTES/FORA do ApplicationProvider */}
+      <IconRegistry icons={EvaIconsPack} />
+
+      <ApplicationProvider {...eva} theme={eva.light}>
+        {/* O <Slot /> renderiza a tela atual */}
+        <Slot />
+      </ApplicationProvider>
     </>
   );
 }

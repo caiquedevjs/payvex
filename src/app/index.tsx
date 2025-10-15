@@ -1,11 +1,7 @@
-// Modifique seu arquivo existente: app/index.js
-
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// A importação do ToastManager foi removida daqui, mas a do Toast continua.
-
-import { Input } from '@/components/Input/Input';
-import { Login_Logo } from '@/components/Login_logo/Login_logo';
+import { Input } from '../components/Input/Input';
+import { Login_Logo } from '../components/Login_logo/Login_logo';
 import { app_styles } from './app_styles';
 
 export default function Index() {
@@ -35,9 +31,6 @@ export default function Index() {
   );
 }
 
-// ... seus estilos continuam aqui ...
-
-// ... (seus estilos aqui, sem alterações) ...
 export const text_styles = StyleSheet.create({
   Text: {
     fontSize: 30,

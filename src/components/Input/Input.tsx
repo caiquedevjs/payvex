@@ -1,5 +1,5 @@
-import { Button } from '@/components/Button/button_index';
 import { StyleSheet, TextInput, View } from "react-native";
+import { Button } from "../Button/button_index";
 import { Input_styles } from "./Input_styles";
 export function Input(){
     return(
