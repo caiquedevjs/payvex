@@ -13,8 +13,10 @@ export const UsersScreen= (): React.ReactElement => {
      router.push('/accountScreen')
   };
 
+
   const onOrdersPress = (): void => {
     setSelectedTitle('Company');
+    router.push('/CompanyScreen') 
   };
 
   const onTransactionsPress = (): void => {
@@ -27,6 +29,7 @@ export const UsersScreen= (): React.ReactElement => {
 
    const onIntegracaoPress = (): void => {
     setSelectedTitle('Integrações');
+    router.push('/integrationScreen')
   };
   const onSairPress = (): void => {
     setSelectedTitle('Sair');
