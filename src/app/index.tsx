@@ -1,14 +1,37 @@
 
+import { useRouter } from 'expo-router'; // 1. Importar o hook de navegação
+import * as SecureStore from 'expo-secure-store'; // 2. Importar o SecureStore
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Input } from '../components/Input/Input';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+
+import { useState } from 'react';
 import { Login_Logo } from '../components/Login_logo/Login_logo';
+import { loginUser } from '../features/auth.login.feature';
 import { app_styles } from './app_styles';
 
 
 export default function Index() {
- 
+  const  [mail, setMail] = useState('');
+  const  [password, setPassword] = useState('')
+  const router = useRouter();
 
+const handlerLogin =  async () => {
+  if (!mail || !password ){
+    return console.error('Por favor digite um mail e sua senha.')
+  }
+  try{
+    const data = await loginUser(mail, password)
+    console.log('Token de Acesso:', data.access_token);
+    Alert.alert('Sucesso!', 'Login realizado.');
+
+    await SecureStore.setItemAsync('userToken', data.access_token);
+    router.replace('/UsersScreen');
+  }
+  catch (error) {
+      // ERRO!
+      Alert.alert('Erro no Login');
+    }
+}
 
   return (
     <View style={app_styles.App}>
@@ -24,8 +47,11 @@ export default function Index() {
       </Text>
 
       <Login_Logo />
-      <Input />
-
+      <View style={login_form_styles.Form_login}>
+      <TextInput placeholder="Mail" placeholderTextColor= '#3A416F'  inputMode="email" value={mail} onChangeText={setMail}></TextInput>
+      <TextInput placeholder="Senha" placeholderTextColor= '#3A416F'  inputMode="text" secureTextEntry={true} value={password} onChangeText={setPassword}></TextInput>
+      <button onClick={handlerLogin}>Login</button>
+      </View>
       <View style={singin_conteiner.Sing_in}>
         <TouchableOpacity>
           <Text style={singin_text.Sing_in_text}>Sing in</Text>
@@ -65,3 +91,11 @@ export const singin_text = StyleSheet.create({
     color: '#3A416F',
   },
 });
+
+export const login_form_styles = StyleSheet.create({
+    Form_login : {
+        width : "100%",
+        gap : 10
+       
+    }
+})

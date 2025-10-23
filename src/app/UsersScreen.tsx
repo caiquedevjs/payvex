@@ -16,12 +16,12 @@ export const UsersScreen= (): React.ReactElement => {
 
   const onOrdersPress = (): void => {
     setSelectedTitle('Company');
-    router.push('/CompanyScreen') 
+    router.push('/') 
   };
 
   const onTransactionsPress = (): void => {
     setSelectedTitle('Assinatura');
-    router.push('/SubscriptionScreen')
+    router.push('/')
   };
 
   const onSettingsPress = (): void => {
@@ -30,7 +30,7 @@ export const UsersScreen= (): React.ReactElement => {
 
    const onIntegracaoPress = (): void => {
     setSelectedTitle('Integrações');
-    router.push('/integrationScreen')
+    router.push('/')
   };
   const onSairPress = (): void => {
     setSelectedTitle('Sair');
