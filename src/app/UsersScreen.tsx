@@ -21,6 +21,7 @@ export const UsersScreen= (): React.ReactElement => {
 
   const onTransactionsPress = (): void => {
     setSelectedTitle('Assinatura');
+    router.push('/SubscriptionScreen')
   };
 
   const onSettingsPress = (): void => {
