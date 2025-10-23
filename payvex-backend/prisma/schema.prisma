@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // Caminho padrão que funciona com a importação do '@prisma/client' no NestJS
+  output   = "../node_modules/.prisma/client" 
+}
+
+datasource db {
+  provider = "postgresql"
+
+  url      = env("DATABASE_URL")
+}
+
+
+// Modelo da Empresa (Tenant)
+// É o seu cliente pagante.
+model Company {
+  id    String @id @default(cuid())
+  name  String // Nome Fantasia
+  cnpj  String @unique // CNPJ ou outro identificador legal
+
+  // Relacionamentos
+  users         User[]
+  subscription  Subscription?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Modelo do Colaborador
+// É o usuário que pertence a uma empresa.
+model User {
+  id            String  @id @default(cuid())
+  email         String  @unique
+  name          String
+  passwordHash  String
+  role          Role    @default(USER)
+
+  // Relacionamento com a Empresa
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Modelo da Assinatura
+// Define o plano e os limites da EMPRESA.
+model Subscription {
+  id        String  @id @default(cuid())
+  planName  String  @default("trial")
+  status    String  @default("ativo")
+  
+  // Nossos limites de quota
+  usersLimit        Int @default(3)
+  gatewaysLimit     Int @default(1)
+  transactionsLimit Int @default(100)
+  
+  // Relacionamento com a Empresa
+  companyId String  @unique
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  nextRenewalAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// Enum para os papéis de usuário
+enum Role {
+  ADMIN
+  USER
+}
