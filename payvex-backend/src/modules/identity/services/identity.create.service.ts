@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable prettier/prettier */
 import {
-    ConflictException,
-    ForbiddenException,
-    Injectable,
-    UnprocessableEntityException, // Para o erro de quota
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  UnprocessableEntityException, // Para o erro de quota
 } from '@nestjs/common';
 import { Role } from '@prisma/client'; // Importe Role e User
 import * as bcrypt from 'bcrypt';

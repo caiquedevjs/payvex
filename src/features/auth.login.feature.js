@@ -1,6 +1,6 @@
 // ✅ MUDE ESTE IP para o IP da sua máquina (que você pegou com 'ipconfig')
 // Use a porta do seu NestJS (3000)
-const API_URL = 'http://192.168.1.1:3000/identity'; 
+const API_URL = 'http://192.168.1.191:3000/identity'; 
 
 /**
  * Chama a API de login do backend.
