@@ -52,13 +52,10 @@ O **Payvex** é um ecossistema SaaS (Software as a Service) focado na centraliza
 │   │   ├── modules/        # Identity, Payments, Subscriptions
 │   │   └── prisma.service/ # Conexão Singleton
 │   └── prisma/             # Schema.prisma e Migrations
+```
 
 
 
-Aqui está o Documento de Requisitos e Modelo de Negócio completo, formatado em Markdown para você criar o arquivo DOCUMENTATION.md no seu GitHub.
-
-Este formato é ideal porque o GitHub renderiza automaticamente as tabelas, listas e negritos, facilitando a leitura por qualquer desenvolvedor ou investidor.
-Markdown
 
 # 📄 Documento de Requisitos e Modelo de Negócio: Payvex
 
