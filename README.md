@@ -1,99 +1,54 @@
-💳 Payvex - Central de Gestão de Pagamentos SaaS
+# 💳 Payvex - Hub de Gestão de Pagamentos B2B
 
-<p align="center"> <img src="https://img.shields.io/badge/Expo-SDK%2054-blue?style=flat-square&logo=expo" alt="Expo SDK"> <img src="https://img.shields.io/badge/NestJS-Framework-red?style=flat-square&logo=nestjs" alt="NestJS"> <img src="https://img.shields.io/badge/Prisma-ORM-2d3748?style=flat-square&logo=prisma" alt="Prisma"> <img src="https://img.shields.io/badge/Supabase-Database-3ecf8e?style=flat-square&logo=supabase" alt="Supabase"> </p>
+<p align="center">
+  <img src="https://img.shields.io/badge/React_Native-SDK%2054-61DAFB?style=for-the-badge&logo=react" alt="React Native">
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS">
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma">
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase">
+</p>
 
-O Payvex é uma solução SaaS B2B completa para unificar a gestão financeira de empresas. Ele permite consolidar transações de múltiplos gateways de pagamento em uma única interface mobile, oferecendo controle total sobre faturamento, colaboradores e planos de assinatura.
-🚀 Funcionalidades Principais
+O **Payvex** é um ecossistema SaaS (Software as a Service) focado na centralização de pagamentos. Projetado para empresas que utilizam múltiplos gateways, o Payvex unifica transações, usuários e assinaturas em uma interface mobile intuitiva e robusta.
 
-    Dashboard Centralizado: Acompanhe pagamentos e extratos em tempo real.
+---
 
-    Multi-tenancy: Isolamento completo de dados entre diferentes empresas.
+## 🌟 Diferenciais do Produto
 
-    Cadastro Atômico: Criação simultânea de Empresa, Usuário Admin e Assinatura via Transações SQL.
+- **Unificação de Gateways:** Visualize todos os seus recebimentos em um só lugar.
+- **Arquitetura Multi-tenant:** Isolamento total de dados por empresa via UUIDs.
+- **Transações Atômicas:** Cadastro garantido (Empresa + Usuário + Assinatura) via Prisma Transactions.
+- **Interface Pro:** Design System baseado no Eva Design (UI Kitten) com notificações fluidas via Toastify.
 
-    Gestão de Assinatura: Controle de quotas de uso (Transações, Usuários e Gateways).
 
-    Segurança Avançada: Autenticação JWT, persistência segura (SecureStore) e criptografia de senhas.
 
-🛠️ Stack Tecnológica
-Frontend (Mobile)
+---
 
-    React Native com Expo SDK 54.
+## 🛠️ Stack Tecnológica
 
-    Expo Router para navegação baseada em arquivos.
+### Frontend (Mobile)
+- **Framework:** React Native (Expo SDK 54)
+- **Navegação:** Expo Router (File-based)
+- **UI:** UI Kitten & NativeWind
+- **Segurança:** Expo Secure Store (Persistência de JWT)
 
-    UI Kitten para o sistema de design (Eva Design).
+### Backend (API)
+- **Framework:** NestJS
+- **Banco de Dados:** PostgreSQL (Supabase)
+- **ORM:** Prisma
+- **Conexão:** Supavisor Pooler (Porta 6543) para alta disponibilidade.
 
-    Axios para integração com API.
+---
 
-Backend (API)
+## 📂 Estrutura do Projeto
 
-    NestJS (Arquitetura escalável).
-
-    Prisma ORM para modelagem de dados.
-
-    PostgreSQL (Hospedado no Supabase).
-
-    JWT & Bcrypt para segurança e hashing.
-
-📦 Como Rodar o Projeto
-1. Pré-requisitos
-
-    Node.js (v18 ou superior)
-
-    Android Studio / Emulador configurado
-
-    Conta no Supabase (PostgreSQL)
-
-2. Configuração do Backend
-Bash
-
-# Entre na pasta do backend
-cd payvex-backend
-
-# Instale as dependências
-npm install
-
-# Configure o seu .env (Use a porta 6543 para o Pooler do Supabase)
-# DATABASE_URL="postgres://postgres.[ID]:[SENHA]@aws-0-sa-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
-
-# Sincronize o banco de dados
-npx prisma generate
-npx prisma db push
-
-# Inicie o servidor
-npm run start:dev
-
-3. Configuração do Mobile
-Bash
-
-# Entre na pasta do mobile
-cd payvex-mobile
-
-# Instale as dependências
-npm install
-
-# Inicie o Expo com limpeza de cache
-npx expo start -c
-
-📁 Estrutura de Pastas (Principais)
-Plaintext
-
-├── payvex-mobile/
-│   ├── app/                # Rotas do Expo Router (Login, Home, Screens)
-│   ├── components/         # Componentes reutilizáveis (Logo, Inputs)
-│   ├── services/           # Configuração do Axios (API)
-│   └── assets/             # Imagens e fontes
+```text
+├── payvex-mobile/          # App React Native
+│   ├── app/                # Rotas (Login, Register, Home, Subscription)
+│   ├── components/         # UI Reutilizável (Logo, Custom Inputs)
+│   ├── service/            # Configuração Axios (IP: 10.0.2.2 para Emulador)
+│   └── babel.config.js     # Configuração de plugins (Reanimated/Worklets)
 │
-├── payvex-backend/
+├── payvex-backend/         # API NestJS
 │   ├── src/
-│   │   ├── modules/        # Módulos NestJS (Identity, Payments)
-│   │   └── prisma.service/ # Singleton de conexão com o banco
-│   └── prisma/             # Schema e Migrations
-
-📄 Documentação de Negócio
-
-Para detalhes sobre requisitos funcionais, modelos de planos e arquitetura de banco de dados, consulte o arquivo DOCUMENTATION.md.
-⚖️ Licença
-
-Este projeto é de uso restrito para o desenvolvimento da plataforma Payvex.
+│   │   ├── modules/        # Identity, Payments, Subscriptions
+│   │   └── prisma.service/ # Conexão Singleton
+│   └── prisma/             # Schema.prisma e Migrations
