@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --brand-blue: #3a416f;
+  --brand-green: #82d616;
+  --radius: 0.625rem;
+}
+
+body {
+  background: #f8f9fa;
+  color: var(--brand-blue);
+  -webkit-font-smoothing: antialiased;
+}
+
+@theme inline {
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-green: var(--brand-green);
+}
