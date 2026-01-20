@@ -1,6 +1,8 @@
 # 💳 Payvex - Hub de Gestão de Pagamentos B2B
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"> <img
   <img src="https://img.shields.io/badge/React_Native-SDK%2054-61DAFB?style=for-the-badge&logo=react" alt="React Native">
   <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS">
   <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma">
@@ -24,6 +26,13 @@ O **Payvex** é um ecossistema SaaS (Software as a Service) focado na centraliza
 
 ## 🛠️ Stack Tecnológica
 
+### Frontend (Web) - NOVO
+- **Framework:** Next.js 15 (App Router)
+- **Motor de Build:** Turbopack (Ultra-fast development)
+- **Estilização:** Tailwind CSS v4 (Engine de alto desempenho)
+- **Componentes:** Shadcn/ui & Radix UI
+- **Ícones:** Lucide React
+
 ### Frontend (Mobile)
 - **Framework:** React Native (Expo SDK 54)
 - **Navegação:** Expo Router (File-based)
@@ -41,11 +50,16 @@ O **Payvex** é um ecossistema SaaS (Software as a Service) focado na centraliza
 ## 📂 Estrutura do Projeto
 
 ```text
+├── payvex-web/             # Dashboard Administrativo Next.js
+│   ├── app/                # App Router (Login, Register, Dashboard)
+│   ├── components/         # Componentes Shadcn/ui & Reutilizáveis
+│   ├── lib/                # Configurações (Axios/API, Utils)
+│   └── public/             # Assets (Logo Payvex, Imagens)
+│
 ├── payvex-mobile/          # App React Native
 │   ├── app/                # Rotas (Login, Register, Home, Subscription)
 │   ├── components/         # UI Reutilizável (Logo, Custom Inputs)
-│   ├── service/            # Configuração Axios (IP: 10.0.2.2 para Emulador)
-│   └── babel.config.js     # Configuração de plugins (Reanimated/Worklets)
+│   └── service/            # Configuração Axios
 │
 ├── payvex-backend/         # API NestJS
 │   ├── src/
@@ -130,8 +144,18 @@ O Payvex opera no modelo de **Software as a Service (SaaS)** com monetização b
 ---
 
 ## 7. Stack de Desenvolvimento
+- **Web:** Next.js
 - **Mobile:** React Native & Expo Router.
 - **Backend:** NestJS & TypeScript.
 - **Database:** PostgreSQL (Supabase).
 - **ORM:** Prisma.
 - **Auth:** JWT.
+
+## 8. Fluxo de Trabalho (Gitflow)
+### O projeto segue um fluxo de trabalho profissional para garantir a estabilidade:
+
+- **main:** Código estável em produção.
+
+- **develop:** Base para integração de novas funcionalidades.
+
+- **feature/:** Desenvolvimento de novas tarefas (ex: feature/login-web).
