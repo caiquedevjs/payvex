@@ -14,10 +14,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service/prisma.service';
 import { CreateUserDto } from '../dtos/identity.create.dtos';
 
-/**
- * Este 'type' define o formato do usuário logado
- * que receberemos do nosso sistema de autenticação (JWT) no futuro.
- */
+
 export type AuthenticatedUser = {
   id: string;
   companyId: string;
@@ -27,23 +24,20 @@ export type AuthenticatedUser = {
 
 @Injectable()
 export class IdentityCreateService {
-  // Injeta o PrismaService para podermos acessar o banco
+ 
   constructor(private prisma: PrismaService) {}
 
-  /**
-   * Criar Colaborador
-   * Para um ADMIN logado adicionar um novo User à sua Company.
-   */
+ 
   async createCollaborator(
     dto: CreateUserDto,
-    adminUser: AuthenticatedUser, // O usuário logado que está fazendo a ação
+    adminUser: AuthenticatedUser, 
   ) {
-    // 1. VERIFICAR AUTORIZAÇÃO (Só Admins podem criar)
+    
     if (adminUser.role !== 'ADMIN') {
       throw new ForbiddenException('Apenas administradores podem adicionar usuários.');
     }
 
-    // 2. VERIFICAR SE O E-MAIL JÁ EXISTE
+    
     const existingUser = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });

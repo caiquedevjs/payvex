@@ -1,4 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsEmail, IsNotEmpty, IsString, MinLength, ValidateNested, } from 'class-validator';
+import { CreateFilialDto } from './create-filial.dto';
 
 export class SignupDto {
   // Dados do Usuário
@@ -13,13 +15,44 @@ export class SignupDto {
   @IsString()
   @MinLength(8, { message: 'A senha deve ter no mínimo 8 caracteres' })
   userPassword: string;
+  
+
+
 
   // Dados da Empresa
-  @IsString()
-  @IsNotEmpty()
-  companyName: string;
+@IsString()
+@IsNotEmpty()
+companyName: string;
 
-  @IsString() // No mundo real, você usaria uma validação de CNPJ
-  @IsNotEmpty()
-  companyCnpj: string;
+ @IsString()
+ @IsNotEmpty()
+ postalCode: string;
+
+@IsString()
+@IsNotEmpty()
+address: string;
+
+@IsString()
+@IsNotEmpty()
+neighborhood: string;
+
+@IsString()
+@IsNotEmpty()
+state: string;
+
+@IsString()
+@IsNotEmpty()
+city: string
+
+@IsArray()
+@ValidateNested({ each: true }) // Valida cada item do array
+@Type(() => CreateFilialDto)    // Converte o JSON para instâncias da classe
+filiais: CreateFilialDto[];
+  phone: any;
+
+ 
+
+
+
+
 }

@@ -1,7 +1,7 @@
 import {
-    ConflictException,
-    Injectable,
-    InternalServerErrorException
+  ConflictException,
+  Injectable,
+  InternalServerErrorException
 } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -31,8 +31,10 @@ export class singupCreateService {
       throw new ConflictException('O e-mail informado já está em uso.');
     }
 
-    const existingCompany = await this.prisma.company.findUnique({
-      where: { cnpj: dto.companyCnpj },
+    const existingCompany = await this.prisma.company.findFirst({
+      where: { filiais: {
+         some: { cnpj: { in: dto.filiais.map(f => f.cnpj) } }
+      } },
     });
     if (existingCompany) {
       throw new ConflictException('O CNPJ informado já está em uso.');
@@ -47,12 +49,24 @@ export class singupCreateService {
     try {
       const result = await this.prisma.$transaction(async (tx) => {
         // 3.1. Criar a Empresa (Company)
-        const newCompany = await tx.company.create({
-          data: {
-            name: dto.companyName,
-            cnpj: dto.companyCnpj,
-          },
-        });
+      const newCompany = await tx.company.create({
+      data: {
+        name: dto.companyName,
+        postalCode: dto.postalCode,
+        address: dto.address,
+        neighborhood: dto.neighborhood,
+        State: dto.state,
+        City: dto.city,
+        phone: dto.phone,
+        filiais: {
+          create: dto.filiais.map((f) => ({
+            name: f.name || 'Matriz',
+            cnpj: f.cnpj,
+          })),
+        },
+      },
+    });
+       
 
         // 3.2. Criar a Assinatura (Subscription) inicial
         // Por padrão, já cria no plano 'trial'

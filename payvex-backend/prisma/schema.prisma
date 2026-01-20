@@ -19,14 +19,38 @@ datasource db {
 model Company {
   id    String @id @default(cuid())
   name  String // Nome Fantasia
-  cnpj  String @unique // CNPJ ou outro identificador legal
+  postalCode String
+  address String
+  neighborhood String
+  State String
+  City String
+  phone String
 
   // Relacionamentos
+  filiais       Filial[]
   users         User[]
   subscription  Subscription?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// Modelo da Filial
+model Filial {
+  id        String   @id @default(cuid()) // Adicionado o tipo 'String' (estava faltando)
+  name      String?
+  cnpj      String   @unique
+
+  // Relacionamento com a Empresa
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  // Adicionado para manter o padrão de auditoria do seu projeto
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // IMPORTANTE: Futuras entidades (como Transaction) devem apontar para cá
+  // transactions Transaction[] 
 }
 
 // Modelo do Colaborador
