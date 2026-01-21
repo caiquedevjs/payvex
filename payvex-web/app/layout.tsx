@@ -1,3 +1,5 @@
+import { AppLoader } from "@/components/layout/app-loader";
+import { LoaderProvider } from "@/context/loader-context";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google"; // Fonte moderna para SaaS
 import { Toaster } from "react-hot-toast";
@@ -19,24 +21,27 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${inter.className} min-h-screen`}>
         {/* Provedor de Notificações Global */}
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: "#3A416F",
-              color: "#fff",
-            },
-            success: {
-              iconTheme: {
-                primary: "#82d616",
-                secondary: "#fff",
+        <LoaderProvider>
+          <AppLoader />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: "#3A416F",
+                color: "#fff",
               },
-            },
-          }}
-        />
+              success: {
+                iconTheme: {
+                  primary: "#82d616",
+                  secondary: "#fff",
+                },
+              },
+            }}
+          />
 
-        {/* Conteúdo da Página */}
-        <main>{children}</main>
+          {/* Conteúdo da Página */}
+          <main>{children}</main>
+        </LoaderProvider>
       </body>
     </html>
   );

@@ -3,15 +3,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config'; // 2. IMPORTAR Con
 import { JwtModule } from '@nestjs/jwt'; // 1. IMPORTAR O JwtModule
 
 // Seus controllers
+import { findAllCompanyController } from '../controllers/findAllCompany.controller';
+import { FindAllIdentityController } from '../controllers/findAllIdentity.service';
 import { identityLoginController } from '../controllers/identity.login.controller';
 import { SignupController } from '../controllers/indentity.signup.controller';
 
 // Seus serviços
 import { PrismaService } from 'src/prisma.service/prisma.service';
+import { FindAllCompanyService } from '../services/findAllCompany.service';
+import { FindAllIndetityService } from '../services/findAllIdentity.service';
 import { identityLoginService } from '../services/identity.login.service';
 import { singupCreateService } from '../services/signup.create.service';
-
-// O PrismaService NÃO é importado aqui
 
 @Module({
   imports: [
@@ -26,17 +28,19 @@ import { singupCreateService } from '../services/signup.create.service';
       }),
     }),
   ],
+
   controllers: [
     SignupController,
-    identityLoginController
+    identityLoginController,
+    findAllCompanyController,
+    FindAllIdentityController,
   ],
   providers: [
     singupCreateService,
     identityLoginService,
-    PrismaService
-
-    // 4. REMOVA O PrismaService DAQUI
-    // Ele já é global e não deve ser re-declarado.
+    FindAllCompanyService,
+    FindAllIndetityService,
+    PrismaService,
   ],
 })
 export class IdentityModule {}

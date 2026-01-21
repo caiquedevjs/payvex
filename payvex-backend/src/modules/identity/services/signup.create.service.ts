@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable prettier/prettier */
 import {
   ConflictException,
   Injectable,
-  InternalServerErrorException
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -32,9 +35,11 @@ export class singupCreateService {
     }
 
     const existingCompany = await this.prisma.company.findFirst({
-      where: { filiais: {
-         some: { cnpj: { in: dto.filiais.map(f => f.cnpj) } }
-      } },
+      where: {
+        filiais: {
+          some: { cnpj: { in: dto.filiais.map((f) => f.cnpj) } },
+        },
+      },
     });
     if (existingCompany) {
       throw new ConflictException('O CNPJ informado já está em uso.');
@@ -49,24 +54,23 @@ export class singupCreateService {
     try {
       const result = await this.prisma.$transaction(async (tx) => {
         // 3.1. Criar a Empresa (Company)
-      const newCompany = await tx.company.create({
-      data: {
-        name: dto.companyName,
-        postalCode: dto.postalCode,
-        address: dto.address,
-        neighborhood: dto.neighborhood,
-        State: dto.state,
-        City: dto.city,
-        phone: dto.phone,
-        filiais: {
-          create: dto.filiais.map((f) => ({
-            name: f.name || 'Matriz',
-            cnpj: f.cnpj,
-          })),
-        },
-      },
-    });
-       
+        const newCompany = await tx.company.create({
+          data: {
+            name: dto.companyName,
+            postalCode: dto.postalCode,
+            address: dto.address,
+            neighborhood: dto.neighborhood,
+            State: dto.state,
+            City: dto.city,
+            phone: dto.phone,
+            filiais: {
+              create: dto.filiais.map((f) => ({
+                name: f.name || 'Matriz',
+                cnpj: f.cnpj,
+              })),
+            },
+          },
+        });
 
         // 3.2. Criar a Assinatura (Subscription) inicial
         // Por padrão, já cria no plano 'trial'
@@ -99,7 +103,6 @@ export class singupCreateService {
       });
 
       return result;
-      
     } catch (error) {
       // Se a transação falhar, o Prisma faz o rollback
       console.error(error);
@@ -109,6 +112,4 @@ export class singupCreateService {
       );
     }
   }
-
- 
 }
