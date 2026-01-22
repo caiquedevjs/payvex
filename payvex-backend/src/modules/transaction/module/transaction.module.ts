@@ -5,22 +5,30 @@ import { AuthModule } from 'src/auth/modules/auth.module';
 import { GatewayFactory } from '../gateways/gateway.factory';
 
 // Seus controllers
+import { TransactionsFindAllController } from '../controllers/transactions.controller';
 import { TransactionsCreateController } from '../controllers/transactions.create.controller';
 import { WebhooksController } from '../controllers/webhooks.controller';
 
 // Seus serviços
 import { PrismaService } from 'src/prisma.service/prisma.service';
 import { TransactionsService } from '../services/transactions.create.service';
+import { TransactionsFindAllService } from '../services/transactions.service';
 import { WebhookService } from '../services/webhook.service';
+
 @Module({
   imports: [AuthModule],
 
-  controllers: [TransactionsCreateController, WebhooksController],
+  controllers: [
+    TransactionsCreateController, 
+    WebhooksController,
+    TransactionsFindAllController
+  ],
   providers: [
     TransactionsService,
     PrismaService,
     GatewayFactory,
     WebhookService,
+    TransactionsFindAllService
   ],
 })
 export class TransactionsModule {}

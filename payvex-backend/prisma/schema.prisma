@@ -141,11 +141,11 @@ enum Role {
 
 // Definição dos Estados da Transação
 enum TransactionStatus {
-  PENDING
+ PENDING
   PAID
-  CANCELED
-  REFUNDED
   FAILED
+  EXPIRED
+  CANCELED
 }
 
 // Definição dos Métodos de Pagamento suportados
