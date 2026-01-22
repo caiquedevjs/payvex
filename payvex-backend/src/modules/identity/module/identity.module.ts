@@ -1,6 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config'; // 2. IMPORTAR ConfigService (necessário para o JWT)
-import { JwtModule } from '@nestjs/jwt'; // 1. IMPORTAR O JwtModule
+import { AuthModule } from 'src/auth/modules/auth.module';
 
 // Seus controllers
 import { findAllCompanyController } from '../controllers/findAllCompany.controller';
@@ -16,18 +16,7 @@ import { identityLoginService } from '../services/identity.login.service';
 import { singupCreateService } from '../services/signup.create.service';
 
 @Module({
-  imports: [
-    // 3. REGISTRAR O JwtModule AQUI
-    // Isso disponibiliza o 'JwtService' para injeção
-    JwtModule.registerAsync({
-      imports: [ConfigModule], // Para ler o .env
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'), // Pega o segredo do .env
-        signOptions: { expiresIn: '1d' }, // Token expira em 1 dia
-      }),
-    }),
-  ],
+  imports: [AuthModule],
 
   controllers: [
     SignupController,

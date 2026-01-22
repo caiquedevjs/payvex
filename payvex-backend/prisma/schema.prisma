@@ -37,21 +37,28 @@ model Company {
 
 // Modelo da Filial
 model Filial {
-  id        String   @id @default(cuid()) // Adicionado o tipo 'String' (estava faltando)
-  name      String?
-  cnpj      String   @unique
-
-  // Relacionamento com a Empresa
-  companyId String
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  // Adicionado para manter o padrão de auditoria do seu projeto
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String        @id @default(cuid())
+  name         String
+  cnpj         String        @unique
   
-  // IMPORTANTE: Futuras entidades (como Transaction) devem apontar para cá
-  // transactions Transaction[] 
+  // Configurações de Integração (BYOK - Bring Your Own Key)
+  // Deixamos como opcionais pois o cliente pode configurar só um ou outro
+  stripeSecretKey      String?   
+  stripePublicKey      String?   
+  mercadoPagoAccessToken String?
+  stripeWebhookSecret String?
+  
+  // Relacionamentos
+  companyId    String
+  company      Company       @relation(fields: [companyId], references: [id])
+  transactions Transaction[] 
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([companyId])
 }
+
 
 // Modelo do Colaborador
 // É o usuário que pertence a uma empresa.
@@ -65,7 +72,6 @@ model User {
   // Relacionamento com a Empresa
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -85,14 +91,66 @@ model Subscription {
   // Relacionamento com a Empresa
   companyId String  @unique
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  
   nextRenewalAt DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+}
+
+model Transaction {
+  id            String      @id @default(cuid())
+  amount        Decimal     // Valor bruto (ex: 100.00)
+  netAmount     Decimal?    // Valor líquido após taxas (ex: 95.00)
+  fee           Decimal?    // Taxa retida pelo gateway
+  currency      String      @default("BRL")
+  installments  Int         @default(1) // Parcelas
+  status        TransactionStatus @default(PENDING)
+  paymentMethod PaymentMethod
+  
+  // Dados do Pagador (Salvando direto aqui para histórico imutável)
+  customerName     String?
+  customerEmail    String?
+  customerDocument String?    // CPF ou CNPJ
+  
+  // Rastreabilidade do Gateway
+  gateway       String      // "STRIPE", "MERCADO_PAGO"
+  externalId    String      @unique 
+  paymentUrl    String?     // Link do Boleto ou Checkout
+  pixQrCode     String?     // Texto do "Copia e Cola" do PIX
+  
+  // Metadados (JSON bruto para auditoria)
+  metadata      Json?
+  
+  // Relacionamentos
+  filialId      String
+  filial        Filial      @relation(fields: [filialId], references: [id])
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([filialId])
+  @@index([externalId])
+  @@index([status]) // Indexar status é ótimo para filtros no Dashboard
 }
 
 // Enum para os papéis de usuário
 enum Role {
   ADMIN
   USER
+}
+
+
+// Definição dos Estados da Transação
+enum TransactionStatus {
+  PENDING
+  PAID
+  CANCELED
+  REFUNDED
+  FAILED
+}
+
+// Definição dos Métodos de Pagamento suportados
+enum PaymentMethod {
+  PIX
+  CREDIT_CARD
+  BOLETO
 }

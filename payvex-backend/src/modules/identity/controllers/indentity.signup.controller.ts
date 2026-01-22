@@ -1,11 +1,12 @@
+/* eslint-disable prettier/prettier */
 import {
-    Body,
-    Controller,
-    HttpCode,
-    HttpStatus,
-    Post,
-    UsePipes,
-    ValidationPipe,
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 // 1. Importe o DTO que o body vai usar
 import { SignupDto } from '../dtos/signup.dto';
@@ -14,7 +15,6 @@ import { singupCreateService } from '../services/signup.create.service';
 
 @Controller('identity') // Rota base: /identity
 export class SignupController {
-  
   // 3. Injete o seu serviço no construtor
   constructor(private signupService: singupCreateService) {}
 
