@@ -188,7 +188,10 @@ export function SidebarNav() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-white/10" />
-            <DropdownMenuItem className="focus:bg-white/10 focus:text-[#82d616] cursor-pointer">
+            <DropdownMenuItem
+              className="focus:bg-white/10 focus:text-[#82d616] cursor-pointer"
+              onClick={() => router.push("/profile")}
+            >
               <User className="mr-2 h-4 w-4" />
               <span>Meu Perfil</span>
             </DropdownMenuItem>
