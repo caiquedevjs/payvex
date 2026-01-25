@@ -1,4 +1,6 @@
- 
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -7,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoader } from "@/context/loader-context";
 import { api } from "@/lib/api";
+
 import {
   ArrowRight,
   CheckCircle2,
@@ -23,8 +26,9 @@ import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { startLoading } = useLoader();
+  const Cookies = require("js-cookie");
 
+  const { startLoading } = useLoader();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [credentials, setCredentials] = useState({
@@ -43,6 +47,8 @@ export default function LoginPage() {
       // 2. Persistência do Token e dados básicos
       // O NestJS costuma retornar { accessToken: '...' }
       const { accessToken, user } = response.data;
+
+      Cookies.set("@payvex:token", accessToken, { expires: 7 });
 
       localStorage.setItem("@payvex:token", accessToken);
       if (user) {

@@ -3,20 +3,16 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service/prisma.service';
 
 @Injectable()
-export class FindIdentityByIdService {
+export class FindCompanyByIdService {
   constructor(private prisma: PrismaService) {}
 
   async findById(id: string) {
-    const identity = await this.prisma.user.findUnique({
+    return await this.prisma.company.findUnique({
       where: { id },
       include: {
-        company: {
-          include: {
-            filiais: true, // 🛡️ Buscamos as filiais para pegar o CNPJ
-          },
-        },
+        filiais: true, // Traz o array de filiais
+        users: true, // Traz o array de usuários (para pegarmos o Admin)
       },
     });
-    return identity;
   }
 }

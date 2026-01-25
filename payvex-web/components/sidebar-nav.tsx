@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-require-imports */
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -33,10 +35,11 @@ const menuItems = [
   { label: "Integrações", icon: Blocks, href: "/integrations" },
   { label: "Assinaturas", icon: CreditCard, href: "/subscriptions" },
   { label: "Documentações", icon: BookOpen, href: "/docs" },
-  { label: "Conta", icon: UserCircle, href: "/account" },
+  { label: "Empresa", icon: UserCircle, href: "/company" },
 ];
 
 export function SidebarNav() {
+  const Cookies = require("js-cookie");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -61,6 +64,7 @@ export function SidebarNav() {
 
   // Função de Logout
   const handleLogout = () => {
+    Cookies.remove("@payvex:token");
     localStorage.removeItem("@payvex:token");
     localStorage.removeItem("@payvex:user");
     router.push("/login");

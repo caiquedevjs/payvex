@@ -92,7 +92,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* DADOS DA EMPRESA (Vindo do include: company: true) */}
+          {/* DADOS DA EMPRESA */}
           <div className="bg-white p-6 rounded-[0.625rem] border border-slate-200 shadow-sm">
             <div className="flex items-center gap-2 mb-6 text-[#3a416f] font-bold">
               <Building2 className="h-5 w-5 text-[#82d616]" />
@@ -102,18 +102,25 @@ export default function ProfilePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Razão Social</Label>
+                {/* No seu Schema o campo é 'name' dentro de company */}
                 <Input
                   value={user?.company?.name || "Não informada"}
                   readOnly
-                  className="bg-slate-50"
+                  className="bg-slate-50 border-slate-200"
                 />
               </div>
+
               <div className="space-y-2">
-                <Label>Documento / CNPJ</Label>
+                <Label>CNPJ / Documento (Sede)</Label>
                 <Input
-                  value={user?.company?.document || "00.000.000/0001-00"}
+                  /* Buscamos o CNPJ da primeira filial cadastrada. 
+                    Se não houver, ele mostra o placeholder.
+                  */
+                  value={
+                    user?.company?.filiais?.[0]?.cnpj || "00.000.000/0001-00"
+                  }
                   readOnly
-                  className="bg-slate-50"
+                  className="bg-slate-50 border-slate-200 font-mono"
                 />
               </div>
             </div>
