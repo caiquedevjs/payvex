@@ -8,6 +8,7 @@ import {
   BookOpen,
   ChevronRight,
   CreditCard,
+  HandCoins,
   LayoutDashboard,
   LogOut,
   Settings,
@@ -32,10 +33,11 @@ import {
 const menuItems = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
   { label: "Extratos", icon: Wallet, href: "/transactions" },
+  { label: "Pagamentos", icon: HandCoins, href: "/payments" },
   { label: "Integrações", icon: Blocks, href: "/integrations" },
+  { label: "Empresa", icon: UserCircle, href: "/company" },
   { label: "Assinaturas", icon: CreditCard, href: "/subscriptions" },
   { label: "Documentações", icon: BookOpen, href: "/docs" },
-  { label: "Empresa", icon: UserCircle, href: "/company" },
 ];
 
 export function SidebarNav() {

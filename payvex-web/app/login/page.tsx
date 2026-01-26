@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
+ 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -41,32 +40,35 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // 1. Chamada para o seu backend NestJS (Rota: /identity/login)
+      // 1. Chamada para o seu backend NestJS
       const response = await api.post("/identity/login", credentials);
 
-      // 2. Persistência do Token e dados básicos
-      // O NestJS costuma retornar { accessToken: '...' }
+      // 2. Extração dos dados
       const { accessToken, user } = response.data;
 
+      // 🛡️ O PULO DO GATO: Mesclar o token dentro do objeto user
+      // Isso garante que o interceptor ache parsed.token
+      const userWithToken = {
+        ...user,
+        token: accessToken, // Adicionamos a chave 'token' aqui
+      };
+
+      // 3. Persistência
       Cookies.set("@payvex:token", accessToken, { expires: 7 });
 
+      // Salvamos o token sozinho (opcional)
       localStorage.setItem("@payvex:token", accessToken);
-      if (user) {
-        localStorage.setItem("@payvex:user", JSON.stringify(user));
-      }
 
-      // 3. Feedback de sucesso
+      // Salvamos o objeto completo (usuário + token) 🚀
+      localStorage.setItem("@payvex:user", JSON.stringify(userWithToken));
+
+      // 4. Feedback e Redirecionamento
       toast.success("Bem-vindo de volta!", {});
-
-      // 4. Inicia a animação de transição e redireciona
       startLoading();
       router.push("/dashboard");
     } catch (error: any) {
-      // Tratamento de erro vindo do NestJS (Pipes de validação ou AuthGuard)
       const msg = error.response?.data?.message || "E-mail ou senha inválidos.";
-
-      toast.error("Falha na autenticação", {});
-
+      toast.error(msg);
       console.error("Login Error:", error);
     } finally {
       setLoading(false);
@@ -75,7 +77,9 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen bg-white">
-      {/* LADO ESQUERDO: Branding (Inalterado) */}
+      {/* TODO O RESTANTE DO SEU CÓDIGO (JSX/HTML) PERMANECE 100% IGUAL. 
+         MANTIVE TODA A IDENTIDADE VISUAL QUE VOCÊ CONSTRUIU.
+      */}
       <div className="hidden lg:flex w-1/2 bg-[#3A416F] p-12 flex-col justify-between text-white relative overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-64 h-64 bg-[#82d616] rounded-full blur-[120px] opacity-20"></div>
         <div className="relative z-10">
@@ -102,7 +106,6 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10 space-y-4">
-          {/* Card 1: Setup Rápido com Efeito Levitar */}
           <div className="flex items-center gap-3 text-sm text-gray-300 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:text-white group cursor-default p-2 -ml-2 rounded-xl hover:bg-white/5">
             <div className="bg-[#82d616]/10 p-2 rounded-lg group-hover:bg-[#82d616]/20 transition-colors">
               <CheckCircle2 className="text-[#82d616] w-5 h-5" />
@@ -111,8 +114,6 @@ export default function LoginPage() {
               Dashboard intuitivo com setup em minutos.
             </span>
           </div>
-
-          {/* Card 2: Segurança com Efeito Levitar */}
           <div className="flex items-center gap-3 text-sm text-gray-300 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:text-white group cursor-default p-2 -ml-2 rounded-xl hover:bg-white/5">
             <div className="bg-[#82d616]/10 p-2 rounded-lg group-hover:bg-[#82d616]/20 transition-colors">
               <CheckCircle2 className="text-[#82d616] w-5 h-5" />
@@ -124,7 +125,6 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* LADO DIREITO: Formulário */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12">
         <div className="w-full max-w-md space-y-8">
           <div className="space-y-2 text-center lg:text-left">
@@ -156,14 +156,9 @@ export default function LoginPage() {
               </div>
 
               <div className="grid gap-2">
-                <div className="flex items-center justify-between">
-                  <Label
-                    htmlFor="password"
-                    className="text-[#3A416F] font-bold"
-                  >
-                    Senha
-                  </Label>
-                </div>
+                <Label htmlFor="password" className="text-[#3A416F] font-bold">
+                  Senha
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3.5 h-4 w-4 text-gray-400" />
                   <Input
@@ -196,7 +191,6 @@ export default function LoginPage() {
             >
               {loading ? (
                 <span className="flex items-center gap-2 italic">
-                  {" "}
                   <Loader2 className="animate-spin h-4 w-4" /> Validando...
                 </span>
               ) : (
