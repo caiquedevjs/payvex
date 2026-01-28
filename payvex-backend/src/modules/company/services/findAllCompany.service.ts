@@ -6,8 +6,6 @@ export class FindAllCompanyService {
   constructor(private prisma: PrismaService) {}
 
   async findAll() {
-     // eslint-disable-next-line prettier/prettier
-
     const companies = await this.prisma.company.findMany({
       include: {
         filiais: true,
