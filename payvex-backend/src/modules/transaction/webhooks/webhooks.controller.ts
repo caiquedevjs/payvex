@@ -1,8 +1,7 @@
-/* eslint-disable prettier/prettier */
 import * as common from '@nestjs/common';
 // 1. Usamos o namespace import para satisfazer o 'isolatedModules'
 import * as express from 'express';
-import { WebhookService } from '../services/webhook.service';
+import { WebhookService } from './webhook.service';
 
 @common.Controller('webhooks')
 export class WebhooksController {
@@ -28,7 +27,7 @@ export class WebhooksController {
 
     try {
       // Agora o TS sabe que req.rawBody é um Buffer garantido
-      await this.webhookService.processStripe(req.rawBody, sig);
+      await this.webhookService.processStripe(req.rawBody, sig as string);
 
       return res.status(200).send({ received: true });
     } catch (err) {
