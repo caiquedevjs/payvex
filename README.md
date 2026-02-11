@@ -46,6 +46,11 @@ O **Payvex** é um ecossistema SaaS (Software as a Service) focado na centraliza
 - **Conexão:** Supavisor Pooler (Porta 6543) para alta disponibilidade.
 
 ---
+## 🛠 Design System
+
+
+<img src="https://i.postimg.cc/bNTg4byP/Gemini-Generated-Image-ufadu6ufadu6ufad.png" alt="Next.js">
+
 
 ## 📂 Estrutura do Projeto
 
