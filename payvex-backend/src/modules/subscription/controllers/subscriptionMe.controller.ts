@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable prettier/prettier */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
@@ -20,6 +20,6 @@ export class MySubscriptionController {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const companyId = req.user.companyId;
 
-    return this.subscriptionService.getSubscription(companyId);
+    return this.subscriptionService.getSubscriptionByCompany(companyId);
   }
 }

@@ -15,15 +15,15 @@ export const PAYVEX_PLANS = {
     usersLimit: 15,
     transactionsLimit: 10000,
     hasAiAnalyst: false,
-    multiAppLimit: 3,
+    multiAppLimit: 5,
   },
   EXPERT_AI: {
     name: 'Expert AI',
     price: 2500.0,
-    gatewaysLimit: 99,
+    gatewaysLimit: 20,
     usersLimit: 99,
     transactionsLimit: 1000000, // Praticamente ilimitado
     hasAiAnalyst: true,
-    multiAppLimit: 99,
+    multiAppLimit: 10,
   },
 };
