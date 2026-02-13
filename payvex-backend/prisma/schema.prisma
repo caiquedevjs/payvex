@@ -76,24 +76,28 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-// Modelo da Assinatura
-// Define o plano e os limites da EMPRESA.
 model Subscription {
-  id        String  @id @default(cuid())
-  planName  String  @default("trial")
-  status    String  @default("ativo")
+  id                String    @id @default(cuid())
+  planName          String    @default("trial") // trial, standard, pro, expert_ai
+  status            String    @default("ativo")
   
-  // Nossos limites de quota
-  usersLimit        Int @default(3)
-  gatewaysLimit     Int @default(1)
-  transactionsLimit Int @default(100)
+  // Limites de Quota Existentes
+  usersLimit        Int       @default(3)
+  gatewaysLimit     Int       @default(1)
+  transactionsLimit Int       @default(100)
   
-  // Relacionamento com a Empresa
-  companyId String  @unique
-  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  nextRenewalAt DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  // --- Novos campos para o Plano Expert (R$ 2.500) ---
+  hasAiAnalyst      Boolean   @default(false) // Libera o Agente de AI no Dash
+  multiAppLimit     Int       @default(1)     // Qtd de Apps (Shopify, Woo, etc) conectados
+  prioritySupport   Boolean   @default(false) // Flag para suporte prioritário
+  // --------------------------------------------------
+
+  companyId         String    @unique
+  company           Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  nextRenewalAt     DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model Transaction {
